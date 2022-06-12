@@ -1,7 +1,7 @@
 refer to this link for video presentation https://drive.google.com/file/d/16NadjJ9K5NmYZzuMzakgXppAuOJECd7S/view?usp=sharing
 ## Problem context
 Data is collected on server and stored in 3 files events.csv, itemproperties.csv and categorytree.csv raw data without any content transformation.
-Problem statement
+## Problem statement
 The data analyst and data scientists had problems accessing this data from the server and also fixing the data in the CSV files
 ## Approach
 -	Build a data lake as a central data repository and use AWS Athena to query the data on-demand and build reports.
