@@ -1,3 +1,4 @@
+refer to this link for video presentation https://drive.google.com/file/d/16NadjJ9K5NmYZzuMzakgXppAuOJECd7S/view?usp=sharing
 ## Problem context
 Data is collected on server and stored in 3 files events.csv, itemproperties.csv and categorytree.csv raw data without any content transformation.
 Problem statement
