@@ -65,8 +65,6 @@ Amazon Athena is an interactive query service that make it easy to analyze data 
 -	File Compression can speed up queries significantly
 -	Use columnar data storage like Apache Parquet or Apache ORC
 -	Optimize file size (rule of thumb is to aim for 128 MB file size)
-Code Reference: <github repo>
-Presentation: <link>
 
 ## Alternative Architectures
 1.	If live data streaming is an important requirement but we can tolerate some sort of latency (min 60 seconds) then we can install **Kinesis Agent** on the server and use it as a producer to **Kinesis Data Firehose** which is a managed service on AWS that can be used to facilitate different tasks like:
