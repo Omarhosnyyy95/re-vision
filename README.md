@@ -17,7 +17,7 @@ The data analyst and data scientists had problems accessing this data from the s
 There are many solutions for this problem, and I will deliberately choose the simplest. I will also provide alternative solutions throughout the document that we can discuss later and why I prioritize those approaches based on requirements. Developing a robust solution might require more meetings to discuss details of how the users (in this case Data Analyst and Data Scientist) are going to be using the data.  
 
 
-![Alt text](architecture.png?raw=true "Title")
+![Alt text](images/architecture.png?raw=true "Title")
 Figure 1: Architecture
 
 
@@ -35,19 +35,18 @@ The goal of this stage is to automate data transformation. I would like to keep 
 
 
 
-![Alt text](db.png?raw=true "Title")
+![Alt text](images/db.png?raw=true "Title")
 Figure 2: Current Schema
  
 
--	Event to item_properties have a **many-to-many** relationship on itemid
--	Category_tree to item_properties have a **one-to-many** relationship on value. But an **important note** is that **property should be categoryid**
+- Event to item_properties have a **many-to-many** relationship on itemid
+- Category_tree to item_properties have a **one-to-many** relationship on value. But an **important note** is that **property should be categoryid**
 
 
 In this scenario, I use **AWS Glue** to do the data transformation. Glue runs your ETL jobs in an Apache Spark serverless environment. Which means you don’t need to configure and manage a Hadoop cluster (on Amazon EMR for example) to do the job. The transformation steps required to improve the query performance on AWS Athena and reduce cost are:
--	    Convert the storage format to columnar format which can drastically speed up querying process from S3
--	    Compress the files before sending to S3 which can also speed up the querying data from Athena
--	    Partition the files to minimize query time and cost and improve performance. Partitions chosen. Partitioning in this case is built on assumptions which makes sense  to me but might require further investigation
-
+- Convert the storage format to columnar format which can drastically speed up querying process from S3
+- Compress the files before sending to S3 which can also speed up the querying data from Athena
+- Partition the files to minimize query time and cost and improve performance. Partitions chosen. Partitioning in this case is built on assumptions which makes sense  to me but might require further investigation.
     * Events – "where Event = x and itemid=y"
     	- Event
         - itemid
@@ -75,7 +74,7 @@ Presentation: <link>
     -	Convert the storage format to columnar format which can drastically speed up querying process from S3
     -	Zip the files before sending to S3 which can also speed up the querying data from Athena
     -	Dynamic data partitioning in transit before delivering data to S3 to make the dataset immediately available for analysis without running any separate job to partition the data. 
-![Alt text](Firehose.png?raw=true "Title")
+![Alt text](images/Firehose.png?raw=true "Title")
 
 2. Instead of using AWS Glue to do data transformation which is a managed service on AWS. We can create an EMR cluster (a transient cluster preferred to save cost) with Spark installed and use spark to do all the transformation needed. We can trigger the cluster using AWS Lambda and terminate it once the job is done to save cost.
-![Alt text](EMR.png?raw=true "Title")
+![Alt text](images/EMR.png?raw=true "Title")
