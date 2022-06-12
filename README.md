@@ -1,4 +1,4 @@
-Problem context
+# Problem context
 Data is collected on server and stored in 3 files events.csv, itemproperties.csv and categorytree.csv raw data without any content transformation.
 Problem statement
 The data analyst and data scientists had problems accessing this data from the server and also fixing the data in the CSV files
@@ -16,19 +16,26 @@ o	ETL script to transfer the data from the current structure to the new data Or 
 Architecture
 There are many solutions for this problem, and I will deliberately choose the simplest. I will also provide alternative solutions throughout the document that we can discuss later and why I prioritize those approaches based on requirements. Developing a robust solution might require more meetings to discuss details of how the users (in this case Data Analyst and Data Scientist) are going to be using the data.  
 
+
+![Alt text](architecture.png?raw=true "Title")
 Figure 1: Architecture
 
 
 
 This Architecture is divided into to 3 main parts:
-1)	Ingestion
+### 1)	Ingestion
 The goal of this stage is to ingest the data available on the server in CSV format to the cloud environment that we are going to use for data processing. In this scenario I chose AWS. So, my goal is to copy the CSV files from the servers to an S3 bucket on AWS. There are many solutions for such scenarios on AWS like:
 -	Simply use aws s3 sync <source> <destination> command on the server (on demand) to copy new and updated files only from the source directory to the destination bucket and avoid processing old data.
 -	To schedule such job we can either directly use Same architecture but Using AWS DataSync instead of aws s3 sync command to schedule running data sync job.
 
-2)	Transformation
+### 2)	Transformation
 The goal of this stage is to automate data transformation. I would like to keep the current schema as it is for now. Changing the schema would require more discussions on data usage.
- 
+
+
+
+
+
+![Alt text](db.png?raw=true "Title")
 Figure 2: Current Schema
  
 
@@ -50,7 +57,7 @@ Once the data is sent to S3 the, we can use 2 lambda functions to automate the t
 -	triggerCrawler function to automatically trigger a glue crawler once new data arrives to the S3 bucket
 -	triggerJob function to start a Glue job once the crawler run completes successfully.
 
-3)	Consumption
+### 3)	Consumption
 Amazon Athena is an interactive query service that make it easy to analyze data in amazon S3 using Standard SQL. Athena is serverless with no need to manage infrastructure and you only pay for the queries you run. Factors that affect Athena query performance are:
 -	Data Partitioning to divide table into parts and keep the related data together based on column values
 -	File Compression can speed up queries significantly
